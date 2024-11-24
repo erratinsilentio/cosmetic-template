@@ -1,69 +1,128 @@
-import { useState, useEffect, useRef } from 'react'
-import { Menu, X, MapPin, Phone, Clock, Facebook, Instagram, ChevronDown, Star, Users } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from "react";
+import {
+  Menu,
+  X,
+  MapPin,
+  Phone,
+  Clock,
+  Facebook,
+  Instagram,
+  ChevronDown,
+  Star,
+  Users,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Component() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
-  const [isScrolled, setIsScrolled] = useState(false)
-  const sectionsRef = useRef({})
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const sectionsRef = useRef({});
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 50);
 
       const current = Object.entries(sectionsRef.current).find(([key, ref]) => {
         if (ref) {
-          const { top, bottom } = ref.getBoundingClientRect()
-          return top <= 100 && bottom > 100
+          const { top, bottom } = ref.getBoundingClientRect();
+          return top <= 100 && bottom > 100;
         }
-        return false
-      })
+        return false;
+      });
 
       if (current) {
-        setActiveSection(current[0])
+        setActiveSection(current[0]);
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const menuItems = [
-    { name: 'Pierogi', price: '22 zł', description: 'Traditional Polish dumplings with various fillings' },
-    { name: 'Bigos', price: '25 zł', description: 'Hunter's stew with sauerkraut, meat, and spices' },
-    { name: 'Kotlet Schabowy', price: '28 zł', description: 'Breaded pork cutlet served with potatoes and salad' },
-    { name: 'Żurek', price: '18 zł', description: 'Sour rye soup with white sausage and boiled egg' },
-    { name: 'Gołąbki', price: '24 zł', description: 'Cabbage rolls stuffed with meat and rice in tomato sauce' },
-  ]
+    {
+      name: "Pierogi",
+      price: "22 zł",
+      description: "Traditional Polish dumplings with various fillings",
+    },
+    {
+      name: "Bigos",
+      price: "25 zł",
+      description: "Hunter's stew with sauerkraut, meat, and spices",
+    },
+    {
+      name: "Kotlet Schabowy",
+      price: "28 zł",
+      description: "Breaded pork cutlet served with potatoes and salad",
+    },
+    {
+      name: "Żurek",
+      price: "18 zł",
+      description: "Sour rye soup with white sausage and boiled egg",
+    },
+    {
+      name: "Gołąbki",
+      price: "24 zł",
+      description: "Cabbage rolls stuffed with meat and rice in tomato sauce",
+    },
+  ];
 
   const reviews = [
-    { id: 1, author: 'Anna K.', rating: 5, text: 'Absolutely delicious! The pierogi were out of this world.' },
-    { id: 2, author: 'Marek W.', rating: 4, text: 'Great atmosphere and friendly staff. The bigos was fantastic.' },
-    { id: 3, author: 'Ewa S.', rating: 5, text: 'Best Polish food in Żoliborz! Will definitely come back.' },
-  ]
+    {
+      id: 1,
+      author: "Anna K.",
+      rating: 5,
+      text: "Absolutely delicious! The pierogi were out of this world.",
+    },
+    {
+      id: 2,
+      author: "Marek W.",
+      rating: 4,
+      text: "Great atmosphere and friendly staff. The bigos was fantastic.",
+    },
+    {
+      id: 3,
+      author: "Ewa S.",
+      rating: 5,
+      text: "Best Polish food in Żoliborz! Will definitely come back.",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}>
+      <header
+        className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"}`}
+      >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className={`text-2xl font-bold ${isScrolled ? 'text-gray-800' : 'text-white'}`}>SAM Żoliborz</h1>
+          <h1
+            className={`text-2xl font-bold ${isScrolled ? "text-gray-800" : "text-white"}`}
+          >
+            SAM Żoliborz
+          </h1>
           <nav className="hidden md:flex space-x-4">
-            {['home', 'menu', 'about', 'reviews', 'contact'].map((item) => (
+            {["home", "menu", "about", "reviews", "contact"].map((item) => (
               <a
                 key={item}
                 href={`#${item}`}
                 className={`${
-                  activeSection === item ? 'text-yellow-500' : isScrolled ? 'text-gray-800' : 'text-white'
+                  activeSection === item
+                    ? "text-yellow-500"
+                    : isScrolled
+                      ? "text-gray-800"
+                      : "text-white"
                 } hover:text-yellow-500 transition duration-300`}
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </a>
             ))}
           </nav>
-          <button onClick={toggleMenu} className={`md:hidden ${isScrolled ? 'text-gray-800' : 'text-white'}`}>
+          <button
+            onClick={toggleMenu}
+            className={`md:hidden ${isScrolled ? "text-gray-800" : "text-white"}`}
+          >
             {isMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
@@ -75,7 +134,7 @@ export default function Component() {
               exit={{ opacity: 0, y: -20 }}
               className="md:hidden bg-white shadow-md"
             >
-              {['home', 'menu', 'about', 'reviews', 'contact'].map((item) => (
+              {["home", "menu", "about", "reviews", "contact"].map((item) => (
                 <a
                   key={item}
                   href={`#${item}`}
@@ -193,10 +252,17 @@ export default function Component() {
                 className="md:w-1/2 md:pl-8"
               >
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  SAM Żoliborz is a cozy restaurant located in the heart of Żoliborz, Warsaw. We specialize in traditional Polish cuisine, prepared with love and care using locally sourced ingredients. Our friendly staff and warm atmosphere make SAM Żoliborz the perfect place for a family dinner or a night out with friends.
+                  SAM Żoliborz is a cozy restaurant located in the heart of
+                  Żoliborz, Warsaw. We specialize in traditional Polish cuisine,
+                  prepared with love and care using locally sourced ingredients.
+                  Our friendly staff and warm atmosphere make SAM Żoliborz the
+                  perfect place for a family dinner or a night out with friends.
                 </p>
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  Our chef, with over 20 years of experience, brings authentic Polish flavors to life with a modern twist. We take pride in our homemade pierogi, slow-cooked bigos, and perfectly crispy kotlet schabowy.
+                  Our chef, with over 20 years of experience, brings authentic
+                  Polish flavors to life with a modern twist. We take pride in
+                  our homemade pierogi, slow-cooked bigos, and perfectly crispy
+                  kotlet schabowy.
                 </p>
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center">
@@ -219,7 +285,9 @@ export default function Component() {
           className="py-20 bg-white"
         >
           <div className="container mx-auto px-4">
-            <h2 className="text-4xl font-bold text-center mb-12">Customer Reviews</h2>
+            <h2 className="text-4xl font-bold text-center mb-12">
+              Customer Reviews
+            </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {reviews.map((review) => (
                 <motion.div
@@ -241,7 +309,11 @@ export default function Component() {
                       <h3 className="text-lg font-semibold">{review.author}</h3>
                       <div className="flex items-center">
                         {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="text-yellow-500 fill-current" size={16} />
+                          <Star
+                            key={i}
+                            className="text-yellow-500 fill-current"
+                            size={16}
+                          />
                         ))}
                       </div>
                     </div>
@@ -281,10 +353,16 @@ export default function Component() {
             <div className="w-full md:w-1/3 mb-8 md:mb-0">
               <h3 className="text-2xl font-semibold mb-4">Follow Us</h3>
               <div className="flex space-x-4">
-                <a href="#" className="hover:text-yellow-500 transition duration-300">
+                <a
+                  href="#"
+                  className="hover:text-yellow-500 transition duration-300"
+                >
                   <Facebook size={24} />
                 </a>
-                <a href="#" className="hover:text-yellow-500 transition duration-300">
+                <a
+                  href="#"
+                  className="hover:text-yellow-500 transition duration-300"
+                >
                   <Instagram size={24} />
                 </a>
               </div>
@@ -313,5 +391,6 @@ export default function Component() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
+
